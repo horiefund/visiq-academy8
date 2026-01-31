@@ -15,11 +15,11 @@
         }
         
         .hero-gradient {
-            background: linear-gradient(135deg, #00A6E8 0%, #00C853 25%, #FFD600 50%, #FF6D00 75%, #FF3838 100%);
+            background: linear-gradient(135deg, #164088 0%, #00C853 25%, #FFD600 50%, #FF6D00 75%, #e10415 100%);
         }
         
         .text-gradient {
-            background: linear-gradient(135deg, #00A6E8 0%, #00C853 25%, #FFD600 50%, #FF6D00 75%, #FF3838 100%);
+            background: linear-gradient(135deg, #164088 0%, #00C853 25%, #FFD600 50%, #FF6D00 75%, #e10415 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -154,10 +154,10 @@
                 </p>
                 
                 <div class="bg-gradient-to-br from-slate-50 to-blue-50 rounded-2xl p-6 sm:p-8 mb-6">
-                    <p class="text-sm sm:text-base text-gray-700 leading-relaxed mb-4">
+                    <p id="visiq-summary" class="text-sm sm:text-base text-gray-700 leading-relaxed mb-4">
                         VISIQ Academyは、小学生を対象にした教育プログラムです。目的は、テストの点数を短期的に上げることそのものではなく、子どもが自ら学び続ける力（自己学習力・思考力・習慣力）を育てることにあります。現代は、インターネットやAIを使えば知識そのものは誰でも手に入る時代です。一方で、小学校4年生前後から“言葉で考える力”“抽象的に捉える力”が求められ、ここで学力差が広がりやすいと私たちは捉えています。VISIQ Academyはこの時期に“学びの土台”を設計します。重視する力：①言語化②問いを立て調べ納得する③学習を仕組みで継続④AIを答えの代行ではなく思考補助・解釈補助として使う。指導は教える（答えを渡す）を中心にせず、子どもが自分で進められる学び方をメンターが設計・伴走します。入口としてタイピングを扱うのは、考えを止めずに言語化し続ける“思考のインターフェース”だからです。VISIQは受験対策塾ではありません。ただし思考と言語化が育つと学校の学習やテストにもつながりやすくなります。対象は小学生に限定します。入塾前に十分な理解と納得を大切にしています。
                     </p>
-                    <button class="text-sky-500 font-semibold hover:text-orange-500 transition-colors flex items-center gap-2">
+                    <button id="copy-summary-btn" class="text-sky-500 font-semibold hover:text-orange-500 transition-colors flex items-center gap-2">
                         概要をコピーする
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
@@ -166,13 +166,13 @@
                 </div>
 
                 <div class="grid sm:grid-cols-3 gap-4">
-                    <button class="px-4 py-3 bg-sky-100 hover:bg-blue-200 text-blue-700 rounded-xl font-medium transition-colors text-sm sm:text-base">
+                    <button id="copy-merit-btn" class="px-4 py-3 bg-sky-100 hover:bg-blue-200 text-blue-700 rounded-xl font-medium transition-colors text-sm sm:text-base">
                         メリット・デメリットを教えて
                     </button>
-                    <button class="px-4 py-3 bg-yellow-100 hover:bg-orange-200 text-yellow-600 rounded-xl font-medium transition-colors text-sm sm:text-base">
+                    <button id="copy-target-btn" class="px-4 py-3 bg-yellow-100 hover:bg-orange-200 text-yellow-600 rounded-xl font-medium transition-colors text-sm sm:text-base">
                         向く家庭を具体化して
                     </button>
-                    <button class="px-4 py-3 bg-green-100 hover:bg-green-200 text-green-700 rounded-xl font-medium transition-colors text-sm sm:text-base">
+                    <button id="copy-risk-btn" class="px-4 py-3 bg-green-100 hover:bg-green-200 text-green-700 rounded-xl font-medium transition-colors text-sm sm:text-base">
                         リスクと対策を整理して
                     </button>
                 </div>
@@ -537,6 +537,67 @@
         document.querySelectorAll('#mobile-menu a').forEach(link => {
             link.addEventListener('click', function() {
                 document.getElementById('mobile-menu').classList.add('hidden');
+            });
+        });
+
+        // Copy functions for AI evaluation section
+        // 概要をコピーする
+        document.getElementById('copy-summary-btn').addEventListener('click', function() {
+            const summaryText = document.getElementById('visiq-summary').innerText;
+            navigator.clipboard.writeText(summaryText).then(function() {
+                // ボタンのテキストを一時的に変更
+                const originalText = this.innerHTML;
+                this.innerHTML = 'コピーしました✓';
+                setTimeout(() => {
+                    this.innerHTML = originalText;
+                }, 2000);
+            }.bind(this)).catch(function(err) {
+                alert('コピーに失敗しました');
+            });
+        });
+
+        // メリット・デメリットを教えて
+        document.getElementById('copy-merit-btn').addEventListener('click', function() {
+            const summaryText = document.getElementById('visiq-summary').innerText;
+            const prompt = summaryText + '\n\nメリット・デメリットを教えて';
+            navigator.clipboard.writeText(prompt).then(function() {
+                const originalText = this.innerHTML;
+                this.innerHTML = 'コピーしました✓';
+                setTimeout(() => {
+                    this.innerHTML = originalText;
+                }, 2000);
+            }.bind(this)).catch(function(err) {
+                alert('コピーに失敗しました');
+            });
+        });
+
+        // 向く家庭を具体化して
+        document.getElementById('copy-target-btn').addEventListener('click', function() {
+            const summaryText = document.getElementById('visiq-summary').innerText;
+            const prompt = summaryText + '\n\n向く家庭を具体化して';
+            navigator.clipboard.writeText(prompt).then(function() {
+                const originalText = this.innerHTML;
+                this.innerHTML = 'コピーしました✓';
+                setTimeout(() => {
+                    this.innerHTML = originalText;
+                }, 2000);
+            }.bind(this)).catch(function(err) {
+                alert('コピーに失敗しました');
+            });
+        });
+
+        // リスクと対策を整理して
+        document.getElementById('copy-risk-btn').addEventListener('click', function() {
+            const summaryText = document.getElementById('visiq-summary').innerText;
+            const prompt = summaryText + '\n\nリスクと対策を整理して';
+            navigator.clipboard.writeText(prompt).then(function() {
+                const originalText = this.innerHTML;
+                this.innerHTML = 'コピーしました✓';
+                setTimeout(() => {
+                    this.innerHTML = originalText;
+                }, 2000);
+            }.bind(this)).catch(function(err) {
+                alert('コピーに失敗しました');
             });
         });
     </script>
